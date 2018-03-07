@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 export class CooperProvider {
   constructor() { }
 
-  private rating: any = [
+  private ratings: any = [
     'Excellent',
     'Above average',
     'Average',
