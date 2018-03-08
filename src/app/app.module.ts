@@ -7,6 +7,7 @@ import { Angular2TokenService, A2tUiModule } from 'angular2-token';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { ResultsPage } from '../pages/results/results'
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -18,7 +19,8 @@ import { PerformanceDataProvider } from '../providers/performance-data/performan
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    ResultsPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { PerformanceDataProvider } from '../providers/performance-data/performan
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    ResultsPage
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>results</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-card  *ngFor="let result of results">
+        <ion-card-header>
+          {{result.created_at | date:'medium'}}
+        </ion-card-header>
+        <ion-card-content>
+          Result: {{result.data.message}}
+        </ion-card-content>
+      </ion-card>    
+
+</ion-content>
