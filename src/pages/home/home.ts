@@ -14,6 +14,7 @@ import { PersonProvider } from '../../providers/person/person';
 export class HomePage {
   distance: number;
   user: any = {age: 20, gender: 'female', distance: 1000};
+  oldSession: boolean = false;
   constructor(public navCtrl: NavController, 
               public person: PersonProvider, 
               private performanceData: PerformanceDataProvider,
@@ -21,13 +22,20 @@ export class HomePage {
   }
 
   calculate(distance) {
+    this.oldSession = true;
     this.person.doAssessment(this.distance);
-    this.performanceData
-      .saveData({ performance_data: { data: { message: this.person.assessmentMessage } } })
-      .subscribe(data => console.log(data));
+
+    
   }
 
   showResults() {
     this.modalCtrl.create(ResultsPage).present();
+  }
+
+  saveResults(){
+    this.oldSession = false;
+    this.performanceData
+      .saveData({ performance_data: { data: { message: this.person.assessmentMessage } } })
+      .subscribe(data => console.log(data));
   }
 }
