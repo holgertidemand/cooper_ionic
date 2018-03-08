@@ -28,7 +28,8 @@ export class MyApp {
     public alertCtrl: AlertController
   ) {
     this._tokenService.init({
-      apiBase: 'https://your-cooper-api.herokuapp.com/api/v1'
+      apiBase: 'https://coopersapi.herokuapp.com'
+      
     });
   
     this.initializeApp();
@@ -54,6 +55,46 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+  registerAccountPopUp(){
+    console.log('popup');
+    let confirm = this.alertCtrl.create({
+      title: 'Register',
+      inputs: [
+        {
+          name: 'email',
+          placeholder: 'email'
+        },
+        {
+          name: 'password',
+          placeholder: 'password',
+          type: 'password'
+        },
+        {
+          name: 'passwordConformation',
+          placeholder: 'password',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Register',
+          handler: data => {
+            this.register(data);
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+ 
 
   loginPopUp() {
     console.log('popup');
@@ -95,6 +136,15 @@ export class MyApp {
       res => (this.currentUser = res.json().data),
       err => console.error('error')
       );
+  }
+
+  register(credentials){
+    this._tokenService
+    .registerAccount(credentials)
+    .subscribe(
+      res =>      console.log(res),
+      error =>    console.log(error)
+  );
   }
 
   logout() {
