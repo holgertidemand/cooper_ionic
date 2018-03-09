@@ -3,6 +3,7 @@ import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Angular2TokenService} from 'angular2-token';
+import { Events } from 'ionic-angular'
 import 'rxjs/add/operator/map';
 
 import { HomePage } from '../pages/home/home';
@@ -17,7 +18,6 @@ export class MyApp {
   rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
-  currentUser: any;
 
 
   constructor(
@@ -25,20 +25,24 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     private _tokenService: Angular2TokenService,
-    public alertCtrl: AlertController
-  ) {
-    this._tokenService.init({
-      apiBase: 'https://coopersapi.herokuapp.com'
-      
-    });
-  
+    public alertCtrl: AlertController,
+    public events: Events ) {
+      events.subscribe('user:login', () => {
+        this.loginPopUp();
+      });
+      // events.subscribe('current:user', () => {
+      //   MyApp.currentUser
+      // });
+      this._tokenService.init({
+        apiBase: 'https://coopersapi.herokuapp.com'  
+      });
+    
     this.initializeApp();
   
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage }
     ];
-
   }
 
   initializeApp() {
@@ -56,7 +60,7 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  registerAccountPopUp(){
+   registerAccountPopUp(){
     console.log('popup');
     let confirm = this.alertCtrl.create({
       title: 'Register',
@@ -133,7 +137,7 @@ export class MyApp {
     this._tokenService
       .signIn(credentials)
       .subscribe(
-      res => (this.currentUser = res.json().data),
+      res => (MyApp.currentUser = res.json().data),
       err => console.error('error')
       );
   }
@@ -197,7 +201,7 @@ export class MyApp {
     this._tokenService
       .signOut()
       .subscribe(res => console.log(res), err => console.error('error'));
-    this.currentUser = undefined;
+    MyApp.currentUser = undefined;
   }
 }
 

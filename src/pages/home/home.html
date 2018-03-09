@@ -7,8 +7,19 @@
   </ion-navbar>
 </ion-header>
 
+
+
 <ion-content padding>
-    <ion-list>
+  <ion-item>
+    Welcome to Cooper Calculator
+    <button ion-item (click)="loggedIn()" *ngIf="!MyApp.currentUser">
+        Login
+    </button>
+    <button ion-item (click)="registerAccountPopUp()" *ngIf="!MyApp.currentUser">
+        Register
+    </button>
+  </ion-item>
+    <ion-list *ngIf='MyApp.currentUser'>
         <ion-item>
           <ion-label floating>Distance</ion-label>
           <ion-input type="number" [(ngModel)]="distance"></ion-input>
@@ -31,8 +42,8 @@
         </ion-item>
       </ion-list>
       
-      <button block ion-button (click)="calculate()">Calculate</button>
-      <button block ion-button (click)="showResults()">All Results</button>
+      <button block ion-button (click)="calculate()" *ngIf='MyApp.currentUser'>Calculate</button>
+      <button block ion-button (click)="showResults()" *ngIf='MyApp.currentUser'>All Results</button>
 
       <ion-card *ngIf="person?.assessmentMessage">
         <ion-card-header>
