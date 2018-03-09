@@ -138,6 +138,52 @@ export class MyApp {
       );
   }
 
+  updatePasswordPopUp(){
+    let confirm = this.alertCtrl.create({
+      title: 'Update Password',
+      inputs: [
+        {
+          name: 'password',
+          placeholder: 'New Password',
+          type: 'password'
+        },
+        {
+          name: 'passwordConfirmation',
+          placeholder: 'Confirm new password',
+          type: 'password'
+        },
+        {
+          name: 'passwordCurrent',
+          placeholder: 'Current password',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Update',
+          handler: data => {
+            this.changePassword(data);
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  changePassword(credentials){
+    this._tokenService
+    .updatePassword(credentials)
+    .subscribe(
+    res =>      console.log(res),
+    error =>    console.log(error)
+)}
+
   register(credentials){
     this._tokenService
     .registerAccount(credentials)
