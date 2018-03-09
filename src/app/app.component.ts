@@ -16,7 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-
+  currentUser: any;
   pages: Array<{title: string, component: any}>;
 
 
@@ -30,9 +30,7 @@ export class MyApp {
       events.subscribe('user:login', () => {
         this.loginPopUp();
       });
-      // events.subscribe('current:user', () => {
-      //   MyApp.currentUser
-      // });
+      
       this._tokenService.init({
         apiBase: 'https://coopersapi.herokuapp.com'  
       });
@@ -137,7 +135,10 @@ export class MyApp {
     this._tokenService
       .signIn(credentials)
       .subscribe(
-      res => (MyApp.currentUser = res.json().data),
+      res => {
+        this.currentUser = res.json().data
+        this.events.publish('user:loggedIn', this.currentUser)
+      },
       err => console.error('error')
       );
   }
@@ -201,7 +202,7 @@ export class MyApp {
     this._tokenService
       .signOut()
       .subscribe(res => console.log(res), err => console.error('error'));
-    MyApp.currentUser = undefined;
+    this.currentUser = undefined;
   }
 }
 

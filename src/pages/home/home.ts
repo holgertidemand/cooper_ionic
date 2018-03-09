@@ -5,7 +5,7 @@ import { ModalController } from 'ionic-angular'
 import { ResultsPage } from '../results/results'
 import { Events } from 'ionic-angular'
 import { PersonProvider } from '../../providers/person/person';
-import { MyApp } from '../../app/app.component'
+
 
 @Component({
   selector: 'page-home',
@@ -14,14 +14,18 @@ import { MyApp } from '../../app/app.component'
 
 export class HomePage {
   distance: number;
-  // currentUser = this.events.publish('current:user')
-  user: any = {age: 20, gender: 'female', distance: 1000};
+  currentUser: any;
   oldSession: boolean = false;
-  constructor(public navCtrl: NavController, 
-              public person: PersonProvider, 
-              private performanceData: PerformanceDataProvider,
-              private modalCtrl: ModalController,
-              public events: Events) {
+  constructor(
+    public navCtrl: NavController, 
+    public person: PersonProvider, 
+    private performanceData: PerformanceDataProvider,
+    private modalCtrl: ModalController,
+    public events: Events
+  ) {
+      this.events.subscribe('user:loggedIn', (user) =>{
+        this.currentUser = user
+      });
   }
 
   calculate(distance) {
@@ -29,7 +33,7 @@ export class HomePage {
     this.person.doAssessment(this.distance);
   }
 
-  loggedIn() {
+  login() {
     this.events.publish('user:login')
   }
 
