@@ -7,29 +7,52 @@
   </ion-navbar>
 </ion-header>
 
+
+
 <ion-content padding>
-    <ion-list>
+  <ion-item *ngIf="!currentUser">
+    Welcome to Cooper Calculator
+    <button ion-item (click)="login()">
+        Login
+    </button>
+    <button ion-item (click)="registerAccountPopUp()">
+        Register
+    </button>
+  </ion-item>
+    <ion-list *ngIf='currentUser'>
         <ion-item>
           <ion-label floating>Distance</ion-label>
-          <ion-input type="number" [(ngModel)]="user.distance"></ion-input>
+          <ion-input type="number" [(ngModel)]="distance"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Gender</ion-label>
-          <ion-select [(ngModel)]="user.gender">
+          <ion-select [(ngModel)]="person.gender">
             <ion-option value="female">Female</ion-option>
             <ion-option value="male">Male</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label>Age:
-            <ion-badge *ngIf="user.age"> {{user.age}}</ion-badge>
+            <ion-badge *ngIf="person.age"> {{person.age}}</ion-badge>
           </ion-label>
-          <ion-range min="10" max="120" [(ngModel)]="user.age" >
+          <ion-range min="13" max="120" [(ngModel)]="person.age" >
             <ion-label range-left>10</ion-label>
             <ion-label range-right>120</ion-label>
           </ion-range>
         </ion-item>
       </ion-list>
       
-      <button block ion-button (click)="calculate()">Calculate</button>
+      <button block ion-button (click)="calculate()" *ngIf='currentUser'>Calculate</button>
+      <button block ion-button (click)="showResults()" *ngIf='currentUser'>All Results</button>
+
+      <ion-card *ngIf="person?.assessmentMessage">
+        <ion-card-header>
+          Cooper Test Results
+        </ion-card-header>
+        <ion-card-content>
+          Gender: {{person?.gender}}, Age: {{person?.age}} <br/> Result: {{person?.assessmentMessage}}
+        </ion-card-content>
+      </ion-card>
+
+      <button block ion-button *ngIf="oldSession" (click)="saveResults()">Save Result</button>
 </ion-content>

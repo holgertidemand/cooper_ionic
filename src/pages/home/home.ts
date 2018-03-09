@@ -1,16 +1,52 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { PerformanceDataProvider } from '../../providers/performance-data/performance-data'; 
+import { ModalController } from 'ionic-angular'
+import { ResultsPage } from '../results/results'
+import { Events } from 'ionic-angular'
+import { PersonProvider } from '../../providers/person/person';
+
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
-  user: any = {};
-  constructor(public navCtrl: NavController) {
-    this.user = { distance: 1000, age: 20 };
+  distance: number;
+  currentUser: any;
+  oldSession: boolean = false;
+  constructor(
+    public navCtrl: NavController, 
+    public person: PersonProvider, 
+    private performanceData: PerformanceDataProvider,
+    private modalCtrl: ModalController,
+    public events: Events
+  ) {
+      this.events.subscribe('user:loggedIn', (user) =>{
+        this.currentUser = user
+      });
   }
-  calculate() {
-    console.log(this.user);
+
+  calculate(distance) {
+    this.oldSession = true;
+    this.person.doAssessment(this.distance);
   }
+
+  login() {
+    this.events.publish('user:login')
+  }
+
+  showResults() {
+    this.modalCtrl.create(ResultsPage).present();
+  }
+
+  saveResults(){
+    this.oldSession = false;
+    this.performanceData
+      .saveData({ performance_data: { data: { message: this.person.assessmentMessage } } })
+      .subscribe(data => console.log(data));
+  }
+
+
 }
