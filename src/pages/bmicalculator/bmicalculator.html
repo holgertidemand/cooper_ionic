@@ -1,0 +1,43 @@
+
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button (click)="popOut()">
+        Back
+      </button>
+    <ion-title>Calculator</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-item>
+        <ion-label>Measurement System</ion-label>
+        <ion-select [(ngModel)]="measurementSystem" interface="popover">
+          <ion-option value="metric" >Metric</ion-option>
+          <ion-option value="imperial">Imperial</ion-option>
+        </ion-select>
+      </ion-item>
+ <ion-list>
+   <ion-item>
+     <ion-label floatingl> Weight (kg)</ion-label>
+      <ion-input type="number"[(ngModel)]="weight"></ion-input>
+   </ion-item>
+
+   <ion-item>
+    <ion-label floatingl> Height (cm)</ion-label>
+     <ion-input type="number"[(ngModel)]="height"></ion-input>
+  </ion-item>
+ </ion-list>
+
+ <ion-item *ngIf="oldSession"></ion-item>
+ <ion-item *ngIf="oldSession">Your BMI is {{bmiValue}} </ion-item>
+ <ion-item *ngIf="oldSession"> You're {{bmiMessage}}</ion-item>
+ <ion-item class="danger" *ngIf="errorMessage"> Please Select Measurement System </ion-item>
+
+ <div padding>
+    <button block ion-button (click)="calculateBMI()">Calculate</button>
+  </div>
+
+</ion-content>

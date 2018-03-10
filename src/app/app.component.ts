@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Angular2TokenService} from 'angular2-token';
 import { Events } from 'ionic-angular'
+import {BmicalculatorPage} from '../pages/bmicalculator/bmicalculator'
 import 'rxjs/add/operator/map';
 
 import { HomePage } from '../pages/home/home';
@@ -16,7 +17,6 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-  loginCredentials: object;
   currentUser: any;
   pages: Array<{title: string, component: any}>;
 
@@ -44,7 +44,11 @@ export class MyApp {
   
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage }
+      { title: 'Home', component: HomePage
+       },
+       {
+        title: 'BMI Calculator', component: BmicalculatorPage
+       }
     ];
   }
 

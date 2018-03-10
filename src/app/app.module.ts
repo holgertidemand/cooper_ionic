@@ -9,7 +9,7 @@ import { ChartsModule } from 'ng2-charts';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ResultsPage } from '../pages/results/results'
-
+import { BmicalculatorPage } from '../pages/bmicalculator/bmicalculator'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,7 +21,8 @@ import { PerformanceDataProvider } from '../providers/performance-data/performan
   declarations: [
     MyApp,
     HomePage,
-    ResultsPage
+    ResultsPage,
+    BmicalculatorPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +35,8 @@ import { PerformanceDataProvider } from '../providers/performance-data/performan
   entryComponents: [
     MyApp,
     HomePage,
-    ResultsPage
+    ResultsPage,
+    BmicalculatorPage
   ],
   providers: [
     StatusBar,
