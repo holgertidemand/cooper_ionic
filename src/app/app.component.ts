@@ -16,6 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
+  loginCredentials: object;
   currentUser: any;
   pages: Array<{title: string, component: any}>;
 
@@ -29,6 +30,10 @@ export class MyApp {
     public events: Events ) {
       events.subscribe('user:login', () => {
         this.loginPopUp();
+      });
+
+      events.subscribe('user:register', () => {
+        this.registerAccountPopUp();
       });
       
       this._tokenService.init({
@@ -195,8 +200,8 @@ export class MyApp {
     .subscribe(
       res =>      console.log(res),
       error =>    console.log(error)
-  );
-  }
+    );
+  };
 
   logout() {
     this._tokenService

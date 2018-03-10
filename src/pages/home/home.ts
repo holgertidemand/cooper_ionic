@@ -33,6 +33,10 @@ export class HomePage {
     this.person.doAssessment(this.distance);
   }
 
+  register() {
+    this.events.publish('user:register')
+  }
+
   login() {
     this.events.publish('user:login')
   }

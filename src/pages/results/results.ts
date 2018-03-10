@@ -19,6 +19,10 @@ export class ResultsPage {
               private performanceData: PerformanceDataProvider) {
   }
 
+  popOut() {
+    this.navCtrl.pop();
+  }
+
   ionViewDidLoad() {
     this.performanceData
       .getResults()
@@ -61,5 +65,5 @@ export class ResultsPage {
   chartHovered(event: any): void {
   console.log(event);
 }
-
+  
 }
