@@ -41,7 +41,8 @@
   </div>
 
   <ion-item *ngIf="!oldSession"></ion-item>
- <ion-item *ngIf="!oldSession"> You're {{bmiStorage1}}</ion-item>
+ <ion-item *ngIf="!oldSession">{{bmiStorage}}</ion-item>
+ <ion-item *ngIf="!oldSession">{{bmiMessageStorage}}</ion-item>
 
   <button block ion-button (click)='setLocalStorage()'>Save Results</button>
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage'
-import { MyApp } from '/Users/hermionekidd/exercises/7/cooper_ionicjs/src/app/app.component'
+import { MyApp } from '../../app/app.component'
 import { Events } from 'ionic-angular'
 
 
@@ -12,7 +12,7 @@ import { Events } from 'ionic-angular'
 })
 export class BmicalculatorPage {
 
-  bmiMessage: any;
+  bmiMessage: string;
   weight: number;
   height: number;
   bmiValue: number;
@@ -21,8 +21,9 @@ export class BmicalculatorPage {
   errorMessage: boolean = false;
   measurementSystem: string = '';
   currentUser: any; 
-  bmiStorage: string = 'value';
-  bmiStorage1: any;
+  bmiStorage: string = "Last recorded BMI value: ";
+  bmiMessageStorage: string = "You're " 
+
 
   constructor(
     public navCtrl: NavController,
@@ -31,12 +32,26 @@ export class BmicalculatorPage {
       this.events.subscribe('user:loggedIn', (user) =>{
         this.currentUser = user
       });
-      this.storage.get(this.bmiStorage).then((val) => {
-        this.bmiStorage1 = JSON.parse(val);
-        console.log('bmiMessage', val);
+      this.storage.get("value").then((val) => {
+        if (JSON.parse(val) === null){
+          this.bmiStorage = '' 
+        } else {
+        this.bmiStorage += JSON.parse(val);
+        }
       });
-    }
+      this.storage.get("message").then((val) => {
+        if (val === null){
+          this.bmiMessageStorage = '' 
+        } else {
+        this.bmiMessageStorage += val;
+        }
+      });
 
+    }
+    setLocalStorage() {
+      this.storage.set("value", this.bmiValue)
+      this.storage.set("message", this.bmiMessage)
+     }
   
 
   popOut() {
@@ -65,9 +80,7 @@ export class BmicalculatorPage {
   }
  }
 
- setLocalStorage() {
-  this.storage.set(this.bmiStorage, this.bmiValue)
- }
+
 
  setBMIMessage(bmiValue):any {
   if (this.bmiValue < 18.5) {
