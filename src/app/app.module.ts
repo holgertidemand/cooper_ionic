@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { Angular2TokenService, A2tUiModule } from 'angular2-token';
 import { ChartsModule } from 'ng2-charts';
+import { IonicStorageModule } from '@ionic/storage'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -29,7 +30,8 @@ import { PerformanceDataProvider } from '../providers/performance-data/performan
     IonicModule.forRoot(MyApp),
     HttpModule,
     RouterModule,
-    ChartsModule
+    ChartsModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -40,4 +40,9 @@
     <button block ion-button (click)="calculateBMI()">Calculate</button>
   </div>
 
+  <ion-item *ngIf="!oldSession"></ion-item>
+ <ion-item *ngIf="!oldSession"> You're {{bmiStorage1}}</ion-item>
+
+  <button block ion-button (click)='setLocalStorage()'>Save Results</button>
+
 </ion-content>

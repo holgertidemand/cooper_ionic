@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage'
+import { MyApp } from '/Users/hermionekidd/exercises/7/cooper_ionicjs/src/app/app.component'
+import { Events } from 'ionic-angular'
 
 
 @IonicPage()
@@ -17,17 +20,30 @@ export class BmicalculatorPage {
   oldSession: boolean = false;
   errorMessage: boolean = false;
   measurementSystem: string = '';
-
+  currentUser: any; 
+  bmiStorage: string = 'value';
+  bmiStorage1: any;
 
   constructor(
-    public navCtrl: NavController
-  ) {
-  }
+    public navCtrl: NavController,
+    private storage: Storage,
+    public events: Events) {
+      this.events.subscribe('user:loggedIn', (user) =>{
+        this.currentUser = user
+      });
+      this.storage.get(this.bmiStorage).then((val) => {
+        this.bmiStorage1 = JSON.parse(val);
+        console.log('bmiMessage', val);
+      });
+    }
+
+  
 
   popOut() {
     //this.navCtrl.pop();
-    this.navCtrl.setRoot(MyAppPage)
+    this.navCtrl.setRoot(MyApp)
   }
+
 
  calculateBMI(): number {
   if (this.weight > 0 && this.height > 0){
@@ -47,6 +63,10 @@ export class BmicalculatorPage {
       this.errorMessage = true;
     }
   }
+ }
+
+ setLocalStorage() {
+  this.storage.set(this.bmiStorage, this.bmiValue)
  }
 
  setBMIMessage(bmiValue):any {
